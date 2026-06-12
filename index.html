@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>forest.is.it</title>
+<meta name="description" content="Yes. It is.">
+<style>
+  /* ------------------------------------------------------------------
+     forest.is.it — a domain that answers its own question.
+     To change the stream: edit the VIDEO ID in the iframe src below.
+     ------------------------------------------------------------------ */
+  :root {
+    --ink: #c8d6c0;        /* pale moss */
+    --ink-dim: #6f8268;    /* dim moss */
+    --bg: #060a06;         /* near-black green */
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+    font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+  }
+
+  /* Fullscreen 16:9 cover trick: iframe is always at least as wide
+     AND as tall as the viewport, centered, overflow cropped. */
+  .stream {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 56.25vw;          /* 16:9 of viewport width */
+    min-width: 177.78vh;      /* 16:9 of viewport height */
+    min-height: 100vh;
+    border: 0;
+    pointer-events: none;     /* page stays a window, not a player */
+  }
+
+  /* Status line — the whois answer, bottom left */
+  .statusline {
+    position: fixed;
+    left: 1.25rem;
+    bottom: 1.1rem;
+    z-index: 10;
+    color: var(--ink);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+    user-select: none;
+  }
+  .statusline .q { color: var(--ink-dim); }
+  .statusline .a::after {
+    content: "▌";
+    margin-left: 2px;
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .statusline .a::after { animation: none; }
+  }
+
+  /* Unmute hint + credit, bottom right */
+  .credit {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.1rem;
+    z-index: 10;
+    text-align: right;
+    font-size: 0.7rem;
+    line-height: 1.7;
+    color: var(--ink-dim);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  }
+  .credit a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink-dim); }
+  .credit a:hover, .credit a:focus-visible { color: #fff; border-color: #fff; outline: none; }
+
+  @media (max-width: 600px) {
+    .credit { display: none; }
+    .statusline { font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- 24/7 forest livestream (Morten Hilmer, Denmark).
+       Swap the ID after /embed/ if the stream ever goes offline. -->
+  <iframe
+    class="stream"
+    src="https://www.youtube.com/embed/F0GOOP82094?autoplay=1&mute=1&controls=0&rel=0&playsinline=1"
+    title="Live forest stream"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+    referrerpolicy="strict-origin-when-cross-origin">
+  </iframe>
+
+  <div class="statusline" aria-label="forest.is.it — yes, it is">
+    <span class="q">$ whois forest.is.it</span><br>
+    <span class="a">status: ok &nbsp;·&nbsp; it is.</span>
+  </div>
+
+  <div class="credit">
+    live from a forest in Denmark<br>
+    stream by <a href="https://www.youtube.com/watch?v=F0GOOP82094" target="_blank" rel="noopener">Morten Hilmer</a>
+  </div>
+
+</body>
+</html>

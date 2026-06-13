@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=6.0, user-scalable=yes">
 <title>forest.is.it</title>
 <meta name="description" content="Yes. It is.">
 <style>
@@ -22,9 +22,14 @@
     overflow: hidden;
     font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
   }
-
-  /* Fullscreen 16:9 cover trick: iframe is always at least as wide
-     AND as tall as the viewport, centered, overflow cropped. */
+ 
+  /* On desktop the wrapper is invisible: children behave as before,
+     fixed to the viewport. On touch devices (see bottom) it becomes
+     a pannable landscape canvas. */
+  .stage { display: contents; }
+ 
+  /* fullscreen 16:9 cover&iframe is always at least as wide
+     AND as tall as the viewport centered, overflow cropped. */
   .stream {
     position: fixed;
     top: 50%;
@@ -36,10 +41,10 @@
     min-width: 199.2vh;       /* 16:9 of 112vh */
     min-height: 112vh;
     border: 0;
-    pointer-events: none;     /* page stays a window, not a player */
+    pointer-events: none;     /* page stays a window */
   }
-
-  /* Status line — the whois answer, bottom left */
+ 
+  /* status line —  bottom left */
   .statusline {
     position: fixed;
     left: 1.25rem;
@@ -67,7 +72,7 @@
   @media (prefers-reduced-motion: reduce) {
     .statusline .a::after { animation: none; }
   }
-
+ 
   /* Unmute hint + credit, bottom right */
   .credit {
     position: fixed;
@@ -87,35 +92,72 @@
   }
   .credit a { color: #e4eedd; text-decoration: none; border-bottom: 1px solid #9eb494; }
   .credit a:hover, .credit a:focus-visible { color: #fff; border-color: #fff; outline: none; }
-
+ 
   @media (max-width: 600px) {
-    .credit { display: none; }
     .statusline { font-size: 0.72rem; }
+  }
+ 
+  /* ------------------------------------------------------------------
+     TOUCH DEVICES this block only applies to coarse pointers.
+     ------------------------------------------------------------------ */
+  @media (pointer: coarse) {
+    html, body {
+      overflow: auto;                       /* allow panning */
+      height: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+    .stage {
+      display: block;
+      position: relative;
+      width: 177.78vh;                      /* 16:9 canvas, fit to height */
+      height: 100vh;
+      overflow: hidden;                     /* keep the overscan crop */
+    }
+    .stream {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 112%;                          /* same 12% overscan as desktop */
+      height: 112%;
+      min-width: 0;
+      min-height: 0;
+    }
+    /* labels now ride along with the canvas instead of the viewport */
+    .statusline,
+    .credit {
+      position: absolute;
+    }
+    .credit { display: block; }             /* always show both corners on mobile */
   }
 </style>
 </head>
 <body>
-
+ 
+ <div class="stage">
+ 
   <!-- 24/7 forest livestream (Morten Hilmer, Denmark).
        Swap the ID after /embed/ if the stream ever goes offline. -->
   <iframe
     class="stream"
     src="https://www.youtube.com/embed/F0GOOP82094?autoplay=1&mute=1&controls=0&rel=0&playsinline=1"
-    title="Live forest stream"
+    title="live forest stream"
     allow="autoplay; encrypted-media"
     allowfullscreen
     referrerpolicy="strict-origin-when-cross-origin">
   </iframe>
-
+ 
   <div class="statusline" aria-label="forest.is.it — yes, it is">
     <span class="q">$ whois forest.is.it</span><br>
     <span class="a">status: ok &nbsp;·&nbsp; it is.</span>
   </div>
-
+ 
   <div class="credit">
     live from a forest in Denmark<br>
     stream by <a href="https://www.youtube.com/watch?v=F0GOOP82094" target="_blank" rel="noopener">Morten Hilmer</a>
   </div>
-
+ 
+ </div>
+ 
 </body>
 </html>

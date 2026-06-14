@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>about · forest.is.it</title>
+<meta name="description" content="What forest.is.it is, and why it exists.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="page">
+
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav-overlay" aria-hidden="true" aria-label="Main">
+    <a href="index.html">forest</a>
+    <a href="about.html" aria-current="page">about</a>
+    <a href="blog.html">blog</a>
+    <a href="contact.html">contact</a>
+  </nav>
+
+  <header class="page-head">
+    <a class="brand" href="index.html">forest.is.it</a>
+  </header>
+
+  <main class="page-main">
+    <p class="cmd">cat about.txt</p>
+    <h1>A domain that answers its own question</h1>
+
+    <p>Run a whois on this domain and it tells you: <code>status: ok</code>.
+       Read the name out loud and it tells you something else. That pun is
+       the whole reason this page exists.</p>
+
+    <p>The address is a small piece of internet trivia made real.
+       <strong>.it</strong> is Italy's country domain, and underneath it the
+       registry reserves a set of geographic second-levels for the Italian
+       provinces — <strong>is.it</strong> among them, for Isernia. Nobody can
+       own <em>is.it</em> outright, which is exactly why a third-level name
+       like <em>forest.is.it</em> can exist beneath it. So the domain is a
+       forest, living in a province, in Italy, registered from a bedroom in
+       New Jersey.</p>
+
+    <h2>The stream</h2>
+    <p>The forest you're looking at is real and live, 24 hours a day. It comes
+       from a permanent camera run by Danish wildlife photographer
+       <a href="https://www.youtube.com/watch?v=F0GOOP82094" target="_blank" rel="noopener">Morten Hilmer</a>.
+       This site just frames it. All credit for the view is his.</p>
+
+    <h2>The stack</h2>
+    <p>There's no server here. The page is a single static file served from
+       GitHub's edge, encrypted with a Let's Encrypt certificate, pointed at
+       by a handful of DNS records. It costs nothing to run and there's
+       nothing to maintain — which feels right for something whose only job
+       is to be a window onto some trees.</p>
+
+    <p class="note">edit this text in about.html whenever you like</p>
+  </main>
+
+  <footer class="page-foot">
+    $ whois forest.is.it &nbsp;—&nbsp; status: <span class="ok">ok</span> &nbsp;·&nbsp; it is.
+  </footer>
+
+  <script src="nav.js" defer></script>
+</body>
+</html>

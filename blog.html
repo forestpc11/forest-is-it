@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>blog · forest.is.it</title>
+<meta name="description" content="Writing from forest.is.it.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="page">
+
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="nav-overlay" aria-hidden="true" aria-label="Main">
+    <a href="index.html">forest</a>
+    <a href="about.html">about</a>
+    <a href="blog.html" aria-current="page">blog</a>
+    <a href="contact.html">contact</a>
+  </nav>
+
+  <header class="page-head">
+    <a class="brand" href="index.html">forest.is.it</a>
+  </header>
+
+  <main class="page-main">
+    <p class="cmd">ls ~/blog</p>
+    <h1>blog</h1>
+
+    <ul class="post-list">
+      <!-- TO ADD A POST:
+           1. Copy about.html to a new file, e.g. posts/my-first-post.html
+           2. Replace the <main> content with your writing.
+           3. Uncomment and edit a line like the one below, newest on top. -->
+
+      <!--
+      <li>
+        <a href="posts/my-first-post.html">my first post title</a>
+        <span class="date">2026-06-13</span>
+      </li>
+      -->
+    </ul>
+
+    <p class="empty">no posts yet — this is where writing goes</p>
+  </main>
+
+  <footer class="page-foot">
+    $ whois forest.is.it &nbsp;—&nbsp; status: <span class="ok">ok</span> &nbsp;·&nbsp; it is.
+  </footer>
+
+  <script src="nav.js" defer></script>
+</body>
+</html>

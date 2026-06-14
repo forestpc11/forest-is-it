@@ -1,0 +1,207 @@
+/* ==================================================================
+   forest.is.it — shared styles
+   Design language: "moss terminal" — near-black green ground, pale
+   moss monospace, with a whois/terminal motif carried across pages.
+   This file is shared by every page. The forest homepage keeps its
+   own fullscreen-video styles inline and only borrows the nav here.
+   ================================================================== */
+
+:root {
+  --ink:        #c8d6c0;   /* pale moss — body text */
+  --ink-dim:    #6f8268;   /* dim moss — prompts, captions */
+  --ink-bright: #e4eedd;   /* near-white — emphasis, links */
+  --accent:     #9eb494;   /* moss green — the "$" and "ok" */
+  --bg:         #060a06;   /* near-black green — the ground */
+  --panel:      rgba(4, 8, 4, 0.72);
+  --line:       rgba(200, 214, 192, 0.18);
+  --mono: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+
+/* ---------- Hamburger toggle (shared, fixed top-right) ---------- */
+.nav-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+.nav-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--ink-bright);
+  transition: transform .25s ease, opacity .2s ease;
+}
+.nav-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* toggle morphs into an X when the menu is open */
+body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+body.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- Full-screen nav overlay ---------- */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(4, 8, 4, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.4rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+body.nav-open .nav-overlay { opacity: 1; pointer-events: auto; }
+
+.nav-overlay a {
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  letter-spacing: .04em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-overlay a::before { content: "~/"; color: var(--ink-dim); }
+.nav-overlay a:hover,
+.nav-overlay a:focus-visible { color: var(--ink-bright); outline: none; }
+.nav-overlay a[aria-current="page"] { color: var(--ink-bright); }
+.nav-overlay a[aria-current="page"]::after { content: " ▌"; color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle span, .nav-overlay { transition: none; }
+}
+
+/* ---------- Content-page layout (About / Blog / Contact) ---------- */
+/* scoped to body.page so none of this touches the forest homepage */
+body.page {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--mono);
+  line-height: 1.75;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.page-head {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  color: var(--ink-dim);
+  text-decoration: none;
+  font-size: .85rem;
+  letter-spacing: .05em;
+}
+.brand:hover { color: var(--ink-bright); }
+
+.page-main {
+  flex: 1;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 4rem;
+}
+
+/* terminal-style command heading, e.g. "$ cat about.txt" */
+.cmd {
+  color: var(--accent);
+  font-size: .9rem;
+  letter-spacing: .03em;
+  margin-bottom: 1.75rem;
+}
+.cmd::before { content: "$ "; color: var(--ink-dim); }
+
+.page-main h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--ink-bright);
+  letter-spacing: -.01em;
+  margin-bottom: 1.25rem;
+}
+.page-main h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink-bright);
+  margin: 2.5rem 0 .75rem;
+}
+.page-main p { margin-bottom: 1.1rem; }
+.page-main strong { color: var(--ink-bright); font-weight: 600; }
+.page-main em { color: var(--ink); font-style: normal; border-bottom: 1px dotted var(--ink-dim); }
+.page-main code {
+  color: var(--accent);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: .05em .35em;
+  font-size: .9em;
+}
+.page-main a {
+  color: var(--ink-bright);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+}
+.page-main a:hover { color: #fff; border-color: #fff; }
+
+/* dim "comment" line for notes/placeholders */
+.note {
+  color: var(--ink-dim);
+  font-size: .85rem;
+}
+.note::before { content: "// "; }
+
+/* blog index */
+.post-list { list-style: none; }
+.post-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: .9rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.post-list a { border-bottom: none; }
+.post-list a:hover { border-bottom: 1px solid #fff; }
+.post-list .date {
+  color: var(--ink-dim);
+  font-size: .8rem;
+  white-space: nowrap;
+}
+.empty {
+  color: var(--ink-dim);
+  padding: 1.5rem 0;
+}
+.empty::before { content: "// "; }
+
+.page-foot {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--line);
+  font-size: .75rem;
+  letter-spacing: .04em;
+  color: var(--ink-dim);
+}
+.page-foot .ok { color: var(--accent); }
+
+@media (max-width: 600px) {
+  .page-main { padding: 2.5rem 1.25rem 3rem; }
+  .nav-overlay a { font-size: 1.3rem; }
+}

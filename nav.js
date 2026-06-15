@@ -1,3 +1,16 @@
+/* forest.is.it — Google Analytics (GA4), loads on every page via nav.js */
+(function () {
+  var GA_ID = 'G-ES7Y66C6Q7';
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { dataLayer.push(arguments); };
+  gtag('js', new Date());
+  gtag('config', GA_ID);
+})();
+
 /* forest.is.it — hamburger nav toggle (shared by every page) */
 (function () {
   var btn = document.querySelector('.nav-toggle');
